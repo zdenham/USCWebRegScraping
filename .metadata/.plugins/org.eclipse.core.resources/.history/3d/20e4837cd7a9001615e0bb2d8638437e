@@ -1,0 +1,34 @@
+package Scraping;
+
+import java.io.IOException;
+import java.util.Vector;
+
+public class Courses {
+	private Vector<Course> classesUSC = new Vector<Course>();
+	
+	public Courses (){
+		
+	}
+	
+	public Vector<Course> getClasses(){
+		return this.classesUSC;
+	}
+	
+	public void findCoursesFromWeb() throws IOException{
+		
+	}
+	
+	public void printClasses(){
+		
+		for(int i = 0; i < classesUSC.size(); i++){
+			Course myClass = classesUSC.get(i);
+			System.out.print("Class name: " + myClass.getName());
+			System.out.print(" class meeting times- ");
+			
+			for(int j = 0; j < myClass.getTimes().size(); j++){
+			
+			}
+		}
+	}
+	
+}

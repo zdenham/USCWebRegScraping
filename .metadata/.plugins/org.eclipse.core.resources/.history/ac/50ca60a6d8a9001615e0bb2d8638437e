@@ -1,0 +1,46 @@
+package Scraping;
+
+import java.io.IOException;
+import java.util.Vector;
+
+public class Courses {
+	private Vector<Course> classesUSC = new Vector<Course>();
+	
+	public Courses (){
+		
+	}
+	
+	public Vector<Course> getClasses(){
+		return this.classesUSC;
+	}
+	
+	public void findCoursesFromWeb(Departments departmentsUSC) throws IOException{
+		
+		Vector<String> myDepartments = departmentsUSC.getDepartments();
+		
+		for(int i = 0; i < myDepartments.getSize(); i++){
+			
+		}
+		
+	}
+	
+	public void printClasses(){
+		
+		System.out.println("The following are ALL the classes offered at USC spring 2017: ");
+		
+		for(int i = 0; i < classesUSC.size(); i++){
+			Course myClass = classesUSC.get(i);
+			System.out.print("Class code: " + myClass.getName());
+			System.out.print("Location: " + myClass.getLocation());
+			System.out.print(" class meeting times-");
+			
+			Vector<ClassTime> myTimes = myClass.getTimes();
+			for(int j = 0; j < myTimes.size(); j++){
+				System.out.print(" Start: " + myTimes.get(j).getStartTime() + " End: " + myTimes.get(j).getEndTime() + " Day: " + myTimes.get(j).getDay());
+			}
+			
+			System.out.println();
+		}
+	}
+	
+}

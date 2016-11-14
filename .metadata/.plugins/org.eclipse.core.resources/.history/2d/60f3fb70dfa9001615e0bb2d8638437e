@@ -1,0 +1,43 @@
+package Scraping;
+
+public class Course {
+	private String name = "";
+	private String location = "";
+	private String startTime = "";
+	private String endTime = "";
+	private String day = "";
+	
+	public Course(){
+	}
+	
+	public Course(String name, ClassTime meetingTime, String classroom, String location){
+		this.name = name;
+		this.meetingTime = meetingTime;
+		this.location = location;
+	}
+	
+	public String getLocation(){
+		return this.location;
+	}
+	
+	public void setLocation(String location){
+		this.location = location;
+	}
+
+	public String getName() { 
+		return name; 
+	}
+	
+	public void setName(String name) { 
+		this.name = name;
+	}
+	
+	public ClassTime getTime() { 
+		return this.meetingTime;
+	}
+	
+	public void setTimes(ClassTime meetingTime) { 
+		this.meetingTime = meetingTime; 
+	}
+	
+}

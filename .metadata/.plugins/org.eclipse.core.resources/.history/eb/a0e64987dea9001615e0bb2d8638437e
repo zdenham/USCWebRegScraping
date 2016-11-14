@@ -1,0 +1,97 @@
+package Scraping;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Vector;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+//This class uses a department list to find all meeting times and locations for every class offered at USC
+public class Courses {
+	private Vector<Course> classesUSC = new Vector<Course>();
+	
+	public Courses (){
+		
+	}
+	
+	public Vector<Course> getClasses(){
+		return this.classesUSC;
+	}
+	
+	public int getSize(){
+		return this.classesUSC.size();
+	}
+	
+	public void findCoursesFromWeb(Departments departmentsUSC) throws IOException{
+		
+		Vector<String> myDepartments = departmentsUSC.getDepartments();
+		
+		for(int i = 0; i < myDepartments.size(); i++){
+			parseDepartment(myDepartments.get(i));
+		}
+		
+	}
+	
+	private void parseDepartment(String departmentName) throws IOException{
+		
+		String urlString = "http://web-app.usc.edu/web/soc/api/classes/" + departmentName + "/20171";
+		
+		URL url = new URL(urlString);
+		URLConnection uc = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+		
+		String inputLine = "";
+		
+		inputLine = in.readLine();
+		
+		JSONObject json = new JSONObject(inputLine);
+		JSONObject courseObject = json.getJSONObject("OfferedCourses");
+		JSONArray offeredCourses = courseObject.getJSONArray("course");
+		
+		for(int i = 0; i < offeredCourses.length(); i++){
+			parseCourse(offeredCourses.getJSONObject(i));
+		}
+	}
+	
+	private void parseCourse(JSONObject course){
+		JSONObject courseData = course.getJSONObject("CourseData");
+		JSONArray sectionData = courseData.getJSONArray("SectionData");
+		
+		for(int i = 0; i < sectionData.length(); i++){
+			parseSection(sectionData.getJSONObject(i));
+		}
+		
+	}
+	
+	private void parseSection(JSONObject section){
+		String startTime = section.getString("start_time");
+		String endTime = section.getString("end_time");
+		String location = section.getString("location");
+		
+	}
+	
+	public void printClasses(){
+		
+		System.out.println();
+		System.out.println("The following are ALL the sections offered at USC spring 2017: ");
+		
+		for(int i = 0; i < classesUSC.size(); i++){
+			Course myClass = classesUSC.get(i);
+			System.out.print("Class code: " + myClass.getName());
+			System.out.print("Location: " + myClass.getLocation());
+			System.out.print(" class meeting times-");
+			
+			Vector<ClassTime> myTimes = myClass.getTime();
+			for(int j = 0; j < myTimes.size(); j++){
+				System.out.print(" Start: " + myTimes.get(j).getStartTime() + " End: " + myTimes.get(j).getEndTime() + " Day: " + myTimes.get(j).getDay());
+			}
+			
+			System.out.println();
+		}
+	}
+	
+}

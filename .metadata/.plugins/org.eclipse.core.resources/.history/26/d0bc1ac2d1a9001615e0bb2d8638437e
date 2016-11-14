@@ -1,0 +1,16 @@
+package Scraping;
+
+import java.util.Vector;
+
+public class Classes {
+	private Vector<Course> classesUSC = new Vector<Course>();
+	
+	public Classes (){
+		
+	}
+	
+	public Vector<Course> getClasses(){
+		return this.classesUSC;
+	}
+	
+}

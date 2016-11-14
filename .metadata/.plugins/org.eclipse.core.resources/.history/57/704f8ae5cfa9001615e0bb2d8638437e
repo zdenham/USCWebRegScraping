@@ -1,0 +1,9 @@
+package Scraping;
+
+public class Classes {
+	
+	public Classes (){
+		
+	}
+	
+}

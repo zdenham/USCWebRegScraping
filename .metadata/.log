@@ -1,0 +1,13 @@
+!SESSION 2016-11-12 14:44:01.318 -----------------------------------------------
+eclipse.buildId=4.6.0.I20160606-1100
+java.version=1.8.0_91
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product -keyring /Users/zdenham/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product org.eclipse.epp.package.java.product -keyring /Users/zdenham/.eclipse_keyring
+
+!ENTRY org.eclipse.core.net 1 0 2016-11-12 14:45:00.369
+!MESSAGE System property http.nonProxyHosts has been set to local|*.local|169.254/16|*.169.254/16 by an external source. This value will be overwritten using the values from the preferences
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2016-11-13 16:24:58.478
+!MESSAGE Failed to load properties file for project 'zdenham_CSCI201L_Assignment2'

@@ -1,0 +1,10 @@
+package Scraping;
+
+import java.util.Date;
+
+public class ClassTime {
+	private String startTime = "";
+	private String endTime = "";
+	private String day = "";
+	
+}

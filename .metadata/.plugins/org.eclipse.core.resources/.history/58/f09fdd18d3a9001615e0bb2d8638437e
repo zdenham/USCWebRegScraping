@@ -1,0 +1,5 @@
+package Scraping;
+
+public class ClassTime {
+	private Date [] = new Date[2];
+}

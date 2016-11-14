@@ -1,0 +1,40 @@
+package Scraping;
+
+import java.util.Vector;
+
+public class ClassTime {
+	private String startTime = "";
+	private String endTime = "";
+	private Vector<String> day = null;
+	
+	public ClassTime(String startTime, String endTime, Vector<String> day){
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.day = day;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public Vector<String> getDay() {
+		return day;
+	}
+
+	public void setDay(Vector<String> day) {
+		this.day = day;
+	}
+	
+}

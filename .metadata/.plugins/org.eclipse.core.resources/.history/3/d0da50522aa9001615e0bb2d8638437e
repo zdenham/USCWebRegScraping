@@ -1,0 +1,24 @@
+package Scraping;
+
+import java.util.Vector;
+
+public class Departments {
+	private Vector<String> departments = new Vector<String>();
+	
+	public Departments(){
+		
+	}
+	
+	public Vector<String> getDepartments(){
+		return this.departments;
+	}
+	
+	public int getSize(){
+		return this.departments.size();
+	}
+	
+	public void findDepartments(){
+		
+	}
+	
+}

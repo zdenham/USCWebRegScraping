@@ -1,0 +1,22 @@
+package Scraping;
+
+import java.util.Date;
+
+public class Classes {
+	
+	public class Class {
+		
+		public Class(){
+			
+		}
+		
+		public Class(String name, Date [] times, String classroom){
+			
+		}
+	}
+	
+	public Classes (){
+		
+	}
+	
+}

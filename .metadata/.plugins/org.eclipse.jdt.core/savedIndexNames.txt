@@ -1,0 +1,4 @@
+INDEX VERSION 1.129+/Users/zdenham/Documents/USC2016/CS201/study-sesh-script/.metadata/.plugins/org.eclipse.jdt.core
+1913237518.index
+2646177885.index
+386770871.index

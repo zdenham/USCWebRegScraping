@@ -1,0 +1,52 @@
+package Scraping;
+
+import java.util.Date;
+
+public class Course {
+	private String name = "";
+	private Vector<ClassTime> meetingTimes = new Vector<ClassTime>();
+	private String location = "";
+	
+	public Course(){
+	}
+	
+	public Course(String name, Date [][] times, String classroom, String location){
+		this.name = name;
+		this.times = times;
+		this.classroom = classroom;
+		this.location = location;
+	}
+	
+	public String getLocation(){
+		return this.location;
+	}
+	
+	public void setLocation(String location){
+		this.location = location;
+	}
+
+	public String getName() { 
+		return name; 
+	}
+	
+	public void setName(String name) { 
+		this.name = name;
+	}
+	
+	public Date[][] getTimes() { 
+		return times; 
+	}
+	
+	public void setTimes(Date[][] times) { 
+		this.times = times; 
+	}
+	
+	public String getClassroom() { 
+		return classroom; 
+	}
+	
+	public void setClassroom(String classroom) { 
+		this.classroom = classroom; 
+	}
+	
+}

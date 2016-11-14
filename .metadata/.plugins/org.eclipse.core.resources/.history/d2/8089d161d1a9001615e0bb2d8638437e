@@ -1,0 +1,25 @@
+package Scraping;
+
+import java.util.Date;
+
+public class Class {
+	private String name = "";
+	private Date [][] times = null;
+	private String classroom = "";
+	
+	public Class(){
+	}
+	
+	public Class(String name, Date [][] times, String classroom){
+		this.name = name;
+		this.times = times;
+		this.classroom = classroom;
+	}
+
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
+	public Date[][] getTimes() { return times; }
+	public void setTimes(Date[][] times) { this.times = times; }
+	public String getClassroom() { return classroom; }
+	public void setClassroom(String classroom) { this.classroom = classroom; }
+}
