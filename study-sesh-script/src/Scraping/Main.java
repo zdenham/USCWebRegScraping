@@ -19,7 +19,7 @@ public class Main {
 		
 		System.out.println();
 		
-		Courses myCourses = new Courses();
+		SectionSessions myCourses = new SectionSessions();
 		try{
 			myCourses.findCoursesFromWeb(myDepartments);
 		} catch(IOException e){

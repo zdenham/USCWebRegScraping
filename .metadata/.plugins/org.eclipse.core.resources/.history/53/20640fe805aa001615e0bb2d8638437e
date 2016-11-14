@@ -1,0 +1,41 @@
+package Scraping;
+
+import java.util.Vector;
+
+public class DataFiller {
+	private final static String addBuilding = "INSERT INTO Building(USERNAME, PASSWORD) VALUES(?,?)";
+	
+	
+	
+	
+	private Vector<String> buildings = new Vector<String>();
+	private Vector<Classroom> classrooms = new Vector<Classroom>();
+	private Vector<Course> courses = new Vector<Course>();
+ 	private Vector<ClassSession> classSessions = new Vector<ClassSession>();
+ 	
+ 	public DataFiller(){
+ 		
+ 	}
+ 	
+ 	public void connectToDatabase(){
+ 		
+ 	}
+ 	
+ 	public void getInformation(SectionSessions sessions){
+ 		Vector<ClassSession> classSessions = sessions.getClasses();
+ 		
+ 		for(int i = 0; i < classSessions.size(); i++){
+ 			parseSession(classSessions.get(i));
+ 		}
+ 	}
+ 	
+ 	private void parseSession(ClassSession session){
+ 		
+ 	}
+ 	
+ 	public void fillDataBase(){
+ 		
+ 	}
+
+	
+}

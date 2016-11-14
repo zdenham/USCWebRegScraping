@@ -1,0 +1,5 @@
+package Scraping;
+
+public class DataFiller {
+	private Vector<String> Buildings = new Vector<String>();
+}

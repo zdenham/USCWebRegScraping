@@ -1,0 +1,5 @@
+package Scraping;
+
+public class Course {
+	public Course(String name, String )
+}
