@@ -1,0 +1,71 @@
+package Scraping;
+
+import java.util.Vector;
+import java.net.*;
+import java.io.*;
+import org.json.*;
+
+//This class scrapes all of the departments from USC's web-api
+//This information is important because class scheduling is organized by department
+public class Departments {
+	private Vector<String> departmentsUSC = new Vector<String>();
+	
+	public Departments(){
+		
+	}
+	
+	public Vector<String> getDepartments(){
+		return this.departmentsUSC;
+	}
+	
+	public int getSize(){
+		return this.departmentsUSC.size();
+	}
+	
+	public void findDepartmentsFromWeb() throws IOException{
+		System.out.println("getting the departments");
+		URL url = new URL("http://web-app.usc.edu/web/soc/api/depts/20171");
+		URLConnection uc = url.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+		
+		String inputLine = "";
+		
+		inputLine = in.readLine();
+		
+		JSONObject json = new JSONObject(inputLine);
+		
+		JSONArray departmentsArray = json.getJSONArray("department");
+		
+		for(int i = 0; i < departmentsArray.length(); i++){
+			JSONObject department = (JSONObject) departmentsArray.get(i);
+			String code = department.getString("code");
+			departmentsUSC.add(code);
+			
+			boolean hasNest = true;
+			
+			//see if there is a nested department list
+			JSONArray nestedDepartments = null;
+			try {
+				nestedDepartments = department.getJSONArray("department");
+			} catch(JSONException e) {
+				hasNest = false;
+			} finally{
+				if(hasNest == true){
+					for(int j = 0; j < nestedDepartments.length(); j++){
+						JSONObject nestedDepartment = (JSONObject) nestedDepartments.get(j);
+						String nestCode = nestedDepartment.getString("code");
+						departmentsUSC.addElement(nestCode);
+					}
+				}
+			}
+		}
+		
+		in.close();
+	}
+	
+	public void printDepartments(){
+		for(int i = 0; i < departmentsUSC.size(); i++){
+			System.out.println(departmentsUSC.get(i));
+		}
+	}
+}

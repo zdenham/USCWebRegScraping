@@ -1,10 +1,13 @@
 package Scraping;
 
 import java.io.IOException;
+import java.sql.SQLException;
+//import java.util.Vector;
 
 public class Main {
 	
 	public static void main(String[] args){
+		System.out.println("The program is starting");
 		Departments myDepartments = new Departments();
 		
 		try{
@@ -19,21 +22,50 @@ public class Main {
 		
 		System.out.println();
 		
-		SectionSessions myCourses = new SectionSessions();
+		SectionSessions mySessions = new SectionSessions();
 		try{
-			myCourses.findCoursesFromWeb(myDepartments);
+			mySessions.findCoursesFromWeb(myDepartments);
 		} catch(IOException e){
 			e.printStackTrace();
 		}
 		
 		System.out.println("The following are ALL the sections offered at USC spring 2017: ");
 		
-		myCourses.printClasses();
+		mySessions.printClasses();
 		
-		myCourses.saveClassesToFile("courses-usc.txt");
+		mySessions.saveClassesToFile("courses-usc.txt");
 		
-		System.out.println("There are " + myCourses.getSize() + " sections listed.");
+		System.out.println("There are " + mySessions.getSize() + " sections listed.");
 		
+//		ClassSession session = new ClassSession("PHIL-011b", "GFS110", "12:30", "2:00", "H");
+//		Vector<ClassSession> myClasses = new Vector<ClassSession>();
+//		myClasses.add(session);
+//		SectionSessions mySessions = new SectionSessions();
+//		mySessions.setClasses(myClasses);
+		
+		DataFiller df = new DataFiller();
+		df.connect();
+		
+		df.getInformation(mySessions);
+		
+		try {
+			df.fillDataBase();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		Vector<String> a = null;
+		
+//		try {
+//			a = df.getData();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+//		for(int i = 0; i < a.size(); i++){
+//			System.out.println(a.get(i));
+//		}
 		
 	}
 }

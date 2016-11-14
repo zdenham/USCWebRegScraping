@@ -26,7 +26,6 @@ public class Departments {
 		URL url = new URL("http://web-app.usc.edu/web/soc/api/depts/20171");
 		URLConnection uc = url.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
-		
 		String inputLine = "";
 		
 		inputLine = in.readLine();

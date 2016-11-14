@@ -2,18 +2,24 @@ package Scraping;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
 public class DataFiller {
-	private final static String addBuilding = "INSERT INTO Building(USERNAME, PASSWORD) VALUES(?,?)";
-	
-	
+	private final static String addBuilding = "INSERT INTO Building(CODE) VALU//ES(?)";
+	private final static String addCourse = "INSERT INTO Course(CODE) VALUES(?)";
+	private final static String addClassroom = "INSERT INTO Classroom(BUILDING, ROOMNUMBER) VALUES(?,?)";
+	private final static String addClassSession = "INSERT INTO ClassSession(DAY, STARTTIME, ENDTIME, ROOM) VALUES(?,?,?,?)";
+	private final static String getBuilding = "SELECT * FROM Building WHERE CODE=?";
+	private final static String getRoom = "SELECT * FROM Classroom WHERE roomNumber=? AND building=?";
+	private final static String getAllBuildings = "SELECT * FROM Building";
 	
 	private Connection con = null;
 	private Vector<String> buildings = new Vector<String>();
 	private Vector<Classroom> classrooms = new Vector<Classroom>();
-	private Vector<Course> courses = new Vector<Course>();
+	private Vector<String> courses = new Vector<String>();
  	private Vector<ClassSession> classSessions = new Vector<ClassSession>();
  	
  	public DataFiller(){
@@ -22,7 +28,7 @@ public class DataFiller {
  	
  	public void connect() {
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Authentication?user=root&password=jq6wqq&useSSL=false");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/StudySesh?user=root&password=jq6wqq&useSSL=false");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -37,12 +43,116 @@ public class DataFiller {
  	}
  	
  	private void parseSession(ClassSession session){
+ 		Classroom myClassroom = new Classroom(session.getBuilding(), session.getRoom());
  		
+ 		String myCourse = session.getCode();
+ 		
+ 		if(!doesClassroomVectorContain(myClassroom, classrooms)){
+ 			classrooms.add(myClassroom);
+ 		}
+ 		
+ 		if(!doesContain(session.getBuilding(), buildings)){
+ 			buildings.add(session.getBuilding());
+ 		}
+ 		
+ 		if(!doesContain(myCourse, this.courses)){
+ 			this.courses.add(myCourse);
+ 		}
+ 		
+ 		classSessions.add(session);
  	}
  	
- 	public void fillDataBase(){
- 		
+ 	private boolean doesContain(String a, Vector<String> b){
+ 		for(int i = 0; i < b.size(); i++){
+ 			if(b.get(i).compareTo(a) == 0){
+ 				return true;
+ 			}
+ 		}
+ 		return false;
  	}
 
-	
+ 	
+ 	private boolean doesClassroomVectorContain(Classroom a, Vector<Classroom> b){
+ 		for(int i = 0; i < b.size(); i++){
+ 			if(b.get(i).getRoomNumber().compareTo(a.getRoomNumber()) == 0 && b.get(i).getBuilding().compareTo(a.getBuilding()) == 0){
+ 				return true;
+ 			}
+ 		}
+ 		return false;
+ 	}
+ 	
+ 	public void fillDataBase() throws SQLException{
+ 		
+ 		//fill database with buildings
+ 		for(int i = 0; i < buildings.size(); i++){
+			PreparedStatement ps = con.prepareStatement(addBuilding);
+			ps.setString(1, buildings.get(i));
+			ps.executeUpdate();
+ 		}
+ 		
+ 		//fill database with courses
+ 		for(int i = 0; i < courses.size(); i++){
+ 			PreparedStatement ps = con.prepareStatement(addCourse);
+ 			ps.setString(1, courses.get(i));
+ 			ps.executeUpdate();
+ 		}
+ 		
+ 		//fill database with classrooms
+ 		for(int i = 0; i < classrooms.size(); i++){
+ 			PreparedStatement ps = con.prepareStatement(getBuilding);
+ 			ps.setString(1, classrooms.get(i).getBuilding());
+ 			ResultSet building = ps.executeQuery();
+ 			int building_id = 0;
+ 			
+ 			while(building.next()){
+ 				building_id = building.getInt("id");
+ 			}
+ 			
+ 			PreparedStatement cs = con.prepareStatement(addClassroom);
+ 			
+ 			cs.setInt(1, building_id);
+ 			cs.setString(2, classrooms.get(i).getRoomNumber());
+ 			cs.executeUpdate();
+ 		}
+ 		
+ 		//fill database with class Sessions
+ 		for(int i = 0; i < classSessions.size(); i++){
+ 			String room = classSessions.get(i).getRoom();
+ 			String building = classSessions.get(i).getBuilding();
+ 			
+ 			PreparedStatement ps = con.prepareStatement(getRoom);
+ 			ps.setString(1, room);
+ 			ps.setString(2, building);
+ 			
+ 			ResultSet rooms = ps.executeQuery();
+ 			int room_id = 0;
+ 			
+ 			while(rooms.next()){
+ 				room_id = rooms.getInt("id");
+ 			}
+ 			
+ 			PreparedStatement cs = con.prepareStatement(addClassSession);
+ 			
+ 			cs.setString(1, classSessions.get(i).getDay());
+ 			cs.setString(2, classSessions.get(i).getStartTime());
+ 			cs.setString(3, classSessions.get(i).getEndTime());
+ 			cs.setInt(4, room_id);
+ 			
+ 			cs.executeUpdate();
+ 		}
+ 	}
+ 	
+ 	public Vector<String> getData() throws SQLException {
+ 		Vector<String> data = new Vector<String>();
+ 		PreparedStatement ps = con.prepareStatement(getAllBuildings);
+ 		
+ 		ResultSet rs = ps.executeQuery();
+ 		
+ 		while(rs.next()){
+ 			data.add(rs.getString("code"));
+ 		}
+ 		
+ 		return data;
+ 	}
+ 	
 }

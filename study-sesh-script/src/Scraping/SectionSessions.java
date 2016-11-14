@@ -28,6 +28,10 @@ public class SectionSessions {
 		return this.classesUSC.size();
 	}
 	
+	public void setClasses(Vector<ClassSession> classesUSC){
+		this.classesUSC = classesUSC;
+	}
+	
 	public void findCoursesFromWeb(Departments departmentsUSC) throws IOException{
 		
 		Vector<String> myDepartments = departmentsUSC.getDepartments();
@@ -74,6 +78,7 @@ public class SectionSessions {
 		JSONArray sectionArray = null;
 		JSONObject sectionObject = null;
 		Object sectionData = null;
+		String code = course.getString("PublishedCourseID");
 		
 		try{
 			JSONObject courseData = course.getJSONObject("CourseData");
@@ -90,31 +95,28 @@ public class SectionSessions {
 		}
 		
 		if(sectionArray == null){
-			parseSection(sectionObject);
+			parseSection(sectionObject, code);
 			return;
 		}
 		
 		for(int i = 0; i < sectionArray.length(); i++){
-			parseSection(sectionArray.getJSONObject(i));
+			parseSection(sectionArray.getJSONObject(i), code);
 		}
-		
 	}
 	
-	private void parseSection(JSONObject section){
-		String name = "";
+	private void parseSection(JSONObject section, String code){
 		String location = "";
 		String startTime = "";
 		String endTime = "";
 		String day = "";
 		
 		try {
-			name = section.getString("title");
 			location = section.getString("location");
 			startTime = section.getString("start_time");
 			endTime = section.getString("end_time");
 			day = section.getString("day");
 			
-			ClassSession myCourse = new ClassSession(name,location,startTime,endTime,day);
+			ClassSession myCourse = new ClassSession(code,location,startTime,endTime,day);
 			
 			if(myCourse.getLocation().compareTo("OFFICE") != 0){
 				classesUSC.add(myCourse);
@@ -130,7 +132,7 @@ public class SectionSessions {
 		
 		for(int i = 0; i < classesUSC.size(); i++){
 			ClassSession myClass = classesUSC.get(i);
-			System.out.print("Class title: " + myClass.getName());
+			System.out.print("Class code: " + myClass.getCode());
 			System.out.print(" Location: " + myClass.getLocation());
 			System.out.print(" section meeting time: ");
 			
@@ -145,7 +147,7 @@ public class SectionSessions {
 		    PrintWriter writer = new PrintWriter(fileName, "UTF-8");
 		    for(int i = 0; i < classesUSC.size(); i++){
 				ClassSession myClass = classesUSC.get(i);
-				writer.print(" Class title: " + myClass.getName());
+				writer.print(" Class title: " + myClass.getCode());
 				writer.print(" Location: " + myClass.getLocation());
 				writer.print(" section meeting time: ");
 				writer.print(" Start: " + myClass.getStartTime() + " End: " + myClass.getEndTime() + " Day: " + myClass.getDay());

@@ -15,13 +15,12 @@ CREATE TABLE User (
 CREATE TABLE Classroom (
 	id int(11) primary key not null auto_increment,
 	building int(11) not null,
-    roomNumber varchar(30) not null
+    roomNumber varchar(10) not null
 );
 
-CREATE TABLE Class (
+CREATE TABLE Course (
 	id int(11) primary key not null auto_increment,
-	name varchar(100) not null,
-    code varchar(10) not null
+    code varchar(30) not null
 );
 
 CREATE TABLE StudySession (
@@ -46,6 +45,7 @@ CREATE Table UserSession (
 
 CREATE Table ClassSession (
 	id int(11) primary key not null auto_increment,
+    day varchar(8) not null,
 	startTime varchar(6) not null,
     endTime varchar(6) not null,
     room int(11) not null
@@ -53,5 +53,5 @@ CREATE Table ClassSession (
 
 CREATE Table Building (
 	id int(11) primary key not null auto_increment,
-    code varchar(10) not null
+    code varchar(30) not null
 );

@@ -1,0 +1,70 @@
+package Scraping;
+
+public class ClassSession {
+	private String name = "";
+	private String code = "";
+	private String location = "";
+	private String startTime = "";
+	private String endTime = "";
+	private String day = "";
+	
+	public ClassSession(){
+	}
+	
+	public ClassSession(String name, String location, String startTime, String endTime, String day){
+		this.name = name;
+		this.location = location;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.day = day;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public String getLocation(){
+		return this.location;
+	}
+	
+	public void setLocation(String location){
+		this.location = location;
+	}
+
+	public String getName() { 
+		return name; 
+	}
+	
+	public void setName(String name) { 
+		this.name = name;
+	}
+	
+}

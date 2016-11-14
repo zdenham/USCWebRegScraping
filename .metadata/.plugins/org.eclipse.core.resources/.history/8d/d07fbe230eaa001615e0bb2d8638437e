@@ -1,0 +1,77 @@
+package Scraping;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+
+public class DataFiller {
+	private final static String addBuilding = "INSERT INTO Building(CODE) VALUES(?)";
+	private final static String addClass = "INSERT INTO Class(NAME, CODE) VALUES(?,?)";
+	private final static String addClassroom = "INSERT INTO Classroom(BUILDING, ROOMNUMBER) VALUES(?,?)";
+	private final static String addClassSession = "INSERT INTO ClassSession(DAY, STARTTIME, ENDTIME, ROOM) VALUES(?,?,?,?)";
+	private final static String getBuilding = "SELECT * FROM Building WHERE CODE=?";
+	private final static String getClass = "SELECT * FROM CLASS WHERE CODE=?";
+	private final static String getRoom = "SELECT * FROM Classroom WHERE number=? AND building=?";
+	
+	private Connection con = null;
+	private Vector<String> buildings = new Vector<String>();
+	private Vector<Classroom> classrooms = new Vector<Classroom>();
+	private Vector<Course> courses = new Vector<Course>();
+ 	private Vector<ClassSession> classSessions = new Vector<ClassSession>();
+ 	
+ 	public DataFiller(){
+ 		
+ 	}
+ 	
+ 	public void connect() {
+		try {
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/StudySession?user=root&password=jq6wqq&useSSL=false");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+ 	
+ 	public void getInformation(SectionSessions sessions){
+ 		Vector<ClassSession> classSessions = sessions.getClasses();
+ 		
+ 		for(int i = 0; i < classSessions.size(); i++){
+ 			parseSession(classSessions.get(i));
+ 		}
+ 	}
+ 	
+ 	private void parseSession(ClassSession session){
+ 		char[] days = session.getDay().toCharArray();
+ 		String startTime = session.getStartTime();
+ 		String [] location = parseLocation(session.getLocation())s;
+ 		
+ 		
+ 		for(int i = 0; i < days.length; i++){
+ 			String day = String.valueOf(days[i]);
+ 			
+ 			try {
+ 				PreparedStatement ps = con.prepareStatement(addClassSession);
+ 				ps.setString(1, day);
+ 				ps.setString(2, startTime);
+ 				ps.setString(3, endTime);
+ 				ps.setString(4,  room);
+ 				ResultSet result = ps.executeQuery();
+ 			} catch (SQLException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			} 
+ 		}
+ 	}
+ 	
+ 	private void parseLocation(String location){
+ 		
+ 	}
+ 	
+ 	public void fillDataBase(){
+ 		
+ 	}
+
+	
+}

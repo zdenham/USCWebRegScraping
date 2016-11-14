@@ -1,0 +1,58 @@
+package Scraping;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Vector;
+
+public class Main {
+	
+	public static void main(String[] args){
+//		System.out.println("The program is starting");
+//		Departments myDepartments = new Departments();
+//		
+//		try{
+//			myDepartments.findDepartmentsFromWeb();
+//		} catch (IOException e){
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("Number of Departments: " + myDepartments.getSize());
+//		System.out.println("Here are a list of USC's department codes:");
+//		myDepartments.printDepartments();
+//		
+//		System.out.println();
+//		
+//		SectionSessions mySessions = new SectionSessions();
+//		try{
+//			mySessions.findCoursesFromWeb(myDepartments);
+//		} catch(IOException e){
+//			e.printStackTrace();
+//		}
+//		
+//		System.out.println("The following are ALL the sections offered at USC spring 2017: ");
+//		
+//		mySessions.printClasses();
+//		
+//		mySessions.saveClassesToFile("courses-usc.txt");
+//		
+//		System.out.println("There are " + mySessions.getSize() + " sections listed.");
+		
+		ClassSession session = new ClassSession("math dong slippery", "011", "GFS110", "12:30", "2:00", "H");
+		Vector<ClassSession> myClasses = new Vector<ClassSession>();
+		myClasses.add(session);
+		
+		SectionSessions mySessions = new SectionSessions();
+		mySessions.setClasses(myClasses);
+		
+		DataFiller df = new DataFiller();
+		df.connect();
+		df.getInformation(mySessions);
+		
+		try {
+			df.fillDataBase();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}
